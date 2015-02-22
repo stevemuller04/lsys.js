@@ -46,7 +46,7 @@ Whereas these are allowed:
 * `{abc, bc, c}`
 * `{111, 110, 100}`
 
-Symbols are defined using the "literal = subst1 subst2 subst3 ...;" pattern. For example:
+Symbols are defined using the `"@ literal = subst1 subst2 subst3 ...;"` pattern. For example:
 * `@  >   = $draw(1);`
 * `@  :<  = $move(-1);`
 * `@  +   = $rot(20);`

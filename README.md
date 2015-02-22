@@ -52,7 +52,17 @@ s.rule("F", [ s.lit("F"), s.lit("F") ]);
 s.renderAndFit([ s.lit("X") ], document.getElementById("my_canvas"), 5);
 ```
 
-## Available methods
+## Documentation
+
+### Terminology
+
+A **literal** is any abstract object which has a specific meaning in an L-system. They may (but don't have to) have an effect on the output.
+
+A **symbol** is a named literal. Symbols do not have a direct effect on the system, but a merely used as placeholders for a sequence of literals.
+
+In the following, a **literal method** is a method which produces and returns a literal.
+
+### Literal methods
 
 The following methods return a literal that can be used as a substitute in a rule or symbol definition.
 
@@ -67,6 +77,17 @@ The following methods return a literal that can be used as a substitute in a rul
 * `LSys.draw(distance)`: Moves the cursor ahead by the given distance in pixels and draws the path travelled. Use `LSys.rot()` to change the heading.
 * `LSys.lit(name)`: Gets a reference to the specified literal, which is replaced in a recursion step of the L-system.
 
+### Rules and definitions
+
+An L-system always starts with an initial sequence of literals, called the **axiom**.
+
+Then, each occurrence of a symbol can be replaced by another, specified sequence of literals. Such replacements are called **rules**. They are evaluated in the order of definition.
+This process is repeated as often as desired. Common values used here lie in the range of 3-10.
+
+After the replacement phase, a huge sequence of literals (some of which are symbols, some are not) remains. In contrast to many other L-system renderers, in LSys.js the remaining symbols do not have any meaning *per se*, but the user is free to fix any. For instance, one often associates the symbol "F" to "move forward by 1 unit".
+
+All remaining literals are then evaluated by the rendering engine. For instance, a literal obtained by `LSys.draw(10)` produces a line which is 10 pixels long. Remaining symbols (so named literals) do not have any meaning to the rendering engine and are ignored.
+
 To define the system, use the following methods.
 
 * `LSys.rule(symbol_name, substitutes)`: Defines what happens with the specified symbol in a recursion step. In each such step, named symbols (as obtained by `LSys.lit()`) are replaced according to the rules by the respective list of substitutes. All other literals remain untouched (they are evaluated at the very end, see `LSys.define()`).
@@ -74,8 +95,7 @@ To define the system, use the following methods.
 
 Note that in both cases, `substitutes` must be an array of literals, each of of which must be obtained by some literal method (listed above).
 
-A **literal** is any abstract object which has a specific meaning in an L-system. They may (but don't have to) have an effect on the output.
-A **symbol** is a named literal. Symbols do not have a direct effect on the system, but a merely used as placeholders for a sequence of literals.
+### Rendering
 
 Finally, there are the output methods which evaluate the L-system.
 

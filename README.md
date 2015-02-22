@@ -11,7 +11,7 @@ It will produce a result similar to the following one.
 
 ## Basic usage
 
-It is enough to include the library in the `<head>` your HTML document:
+It is enough to include the library in the `<head>` of your HTML document:
 
 ```html
 <script type="text/javascript" src="lsys.js"></script>

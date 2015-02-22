@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>L-System Demo</title>
+<script type="text/javascript" src="lsys.js"></script>
+<script type="text/javascript">
+window.onload = function()
+{
+	var c = document.getElementById("canvas");
+	if (c.getContext)
+	{
+		c.getContext("2d").lineCap = "round";
+		c.getContext("2d").strokeStyle = "rgb(120,50,0)";
+
+		var s = new LSys();
+		var eps = 15;
+		s.define("F", [ s.draw(6) ]);
+		s.define("X", [ s.relthick(0.8), s.draw(10), s.leaf(50) ]);
+		s.define("+", [ s.rot(30) ]);
+		s.define("-", [ s.rot(-30) ]);
+		s.rule("X", [
+			s.relthick(0.75),
+			s.lit("F"),
+			s.randomrot(-eps, eps),
+			s.save(), s.lit("+"), s.lit("X"), s.lit("+"), s.lit("X"), s.restore(),
+			s.lit("F"),
+			s.save(), s.lit("-"), s.lit("X"), s.lit("-"), s.lit("X"), s.restore(),
+			s.lit("F"),
+			s.lit("F"),
+			s.lit("X")
+		]);
+		s.rule("F", [ s.lit("F"), s.lit("F") ]);
+		s.renderAndFit([ s.thick(50), s.rot(-90), s.lit("X") ], c, 5);
+	}
+};
+</script>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="700"><p>HTML5 canvas support required.</p></canvas>
+</body>
+</html>
